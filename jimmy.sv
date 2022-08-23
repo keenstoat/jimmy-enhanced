@@ -6,6 +6,8 @@
 `define MUL      6'b000010
 `define MOV      6'b000100
 `define NOP      6'b000111
+`define LDR_IND  6'b000101 //change
+`define STR_IND  6'b000110
 `define DIV_REG  6'b001100
 // Category 10
 `define LD_IMM   6'b100000
@@ -67,6 +69,18 @@ module jimmy(
 
     // Data Memory
     reg [7:0] mem [255:0];
+    wire [7:0] mem0 = mem[0];
+    wire [7:0] mem1 = mem[1];
+    wire [7:0] mem2 = mem[2];
+    wire [7:0] mem3 = mem[3];
+    wire [7:0] mem4 = mem[4];
+    wire [7:0] mem5 = mem[5];
+    wire [7:0] mem6 = mem[6];
+    wire [7:0] mem7 = mem[7];
+    wire [7:0] mem8 = mem[8];
+    wire [7:0] mem9 = mem[9];
+    wire [7:0] mem10 = mem[10];
+    wire [7:0] mem11 = mem[10];
     
     // State Machine
     reg [2:0] state;
@@ -84,16 +98,8 @@ module jimmy(
     assign out_port_2 = out_port[2];
     assign out_port_3 = out_port[3];
     
-    // Instruction set mappings
-    // wire [1:0] inst_cat    = inst_data_bus[7:6];
-    // wire [5:0] cat1_opcode = {2'b00,inst_data_bus[7:4]};
-    // wire [5:0] cat2_opcode = inst_data_bus[7:2];
-    // wire [1:0] cat1_ra     = inst_data_bus[3:2];
-    // wire [1:0] cat1_rb     = inst_data_bus[1:0];
-    // wire [1:0] cat2_ra     = inst_data_bus[1:0];
-    wire [7:0] argument    = inst_data_bus;
+    wire [7:0] argument = inst_data_bus;
    
-
     assign inst_address_bus = PC;
     wire [15:0] mult = R[Rb] * R[Ra];
     
@@ -169,7 +175,23 @@ module jimmy(
                             PC      <= PC + 8'd1;
                             state   <= `FETCH;
                         end
-                        // OPCODE CATEGORY 00, 01, 11 =============================================================
+                        `LDR_IND: begin
+                            R[Ra]   <= mem[R[Rb]];
+                            Z       <= (mem[R[Rb]] == 8'd0) ? 1'b1 : 1'b0;
+                            N       <= mem[R[Rb]][7];
+                            V       <= 0;
+                            PC      <= PC + 8'd1;
+                            state   <= `FETCH;
+                        end
+                        `STR_IND: begin
+                            mem[R[Rb]]  <= R[Ra];
+                            Z           <= (R[Ra] == 8'd0) ? 1'b1 : 1'b0;
+                            N           <= R[Ra][7];
+                            V           <= 0;
+                            PC          <= PC + 8'd1;
+                            state       <= `FETCH;
+                        end
+                        // OPCODE CATEGORY 10 =============================================================
                         `LD_IMM: begin
                             R[Ra]   <= argument;
                             Z       <= (argument == 8'd0) ? 1'b1 : 1'b0;
