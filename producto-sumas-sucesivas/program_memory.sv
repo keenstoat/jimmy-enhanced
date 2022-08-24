@@ -4,7 +4,7 @@
 `define ADD      4'b0000
 `define MUL      4'b0010
 `define MOV      4'b0100
-`define LD_IMM   6'b100000
+`define MOV_IMM  6'b100000
 `define CMP_IMM  6'b100011
 `define DEC      6'b100101
 `define INPUT    6'b100110
@@ -38,7 +38,7 @@ module program_memory(
     always @(posedge(clk))
         if (reset == 0) begin
             
-            {rom[0], rom[1]}    <= {`LD_IMM, `R2, 8'd0};
+            {rom[0], rom[1]}    <= {`MOV_IMM, `R2, 8'd0};
             rom[2]              <= {`INPUT,`R0};
             rom[3]              <= {`INPUT,`R1};
             {rom[4], rom[5]}    <= {`CMP_IMM, `R1, 8'd0}; // loop:

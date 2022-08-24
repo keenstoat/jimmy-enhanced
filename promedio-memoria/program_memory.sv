@@ -8,7 +8,7 @@
 `define LDR_IND  4'b0101
 `define STR_IND  4'b0110
 
-`define LD_IMM   6'b100000
+`define MOV_IMM  6'b100000
 `define CMP_IMM  6'b100011
 `define INC      6'b100100
 `define DEC      6'b100101
@@ -44,8 +44,8 @@ module program_memory(
     
     always @(posedge(clk))
         if (reset == 0) begin
-            {rom[0], rom[1]}    <= {`LD_IMM, `R1, 8'd0};
-            {rom[2], rom[3]}    <= {`LD_IMM, `R2, 8'd0};
+            {rom[0], rom[1]}    <= {`MOV_IMM, `R1, 8'd0};
+            {rom[2], rom[3]}    <= {`MOV_IMM, `R2, 8'd0};
             //feed:
             rom[4]              <= {`INPUT,`R0}; 
             rom[5]              <= {`STR_IND, `R0, `R1}; 
@@ -54,7 +54,7 @@ module program_memory(
             {rom[9], rom[10]}   <= {`BEQ, `part2};
             {rom[11], rom[12]}  <= {`BRA, `feed};
             // part2:
-            {rom[13], rom[14]}  <= {`LD_IMM, `R1, 8'd0};
+            {rom[13], rom[14]}  <= {`MOV_IMM, `R1, 8'd0};
             // do_sum:
             rom[15]             <= {`LDR_IND, `R0, `R1};
             rom[16]             <= {`ADD, `R2, `R0}; 
@@ -80,10 +80,11 @@ feed:
     STR R0 [R1]
     INC R1
     CMP R1 #10
-    BEQ do_sum
+    BEQ part2
     BRA feed
-do_sum:
+parte2:
     LD R1 #0 ; indice ram
+do_sum:
     LDR R0 [R1]
     ADD R2 R0
     INC R1

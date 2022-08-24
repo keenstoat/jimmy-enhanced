@@ -4,13 +4,14 @@
 // Category 00, 01, 11 
 `define ADD_REG  6'b000000
 `define MUL      6'b000010
+`define CMP_REG  6'b000011
 `define MOV      6'b000100
 `define NOP      6'b000111
-`define LDR_IND  6'b000101 //change
+`define LDR_IND  6'b000101
 `define STR_IND  6'b000110
 `define DIV_REG  6'b001100
 // Category 10
-`define LD_IMM   6'b100000
+`define MOV_IMM  6'b100000
 `define CMP_IMM  6'b100011
 `define INC      6'b100100
 `define DEC      6'b100101
@@ -134,7 +135,7 @@ module jimmy(
                         OPCODE <= inst_data_bus[7:2];
                         Ra <= inst_data_bus[1:0];
                         case(inst_data_bus[7:2])
-                            `LD_IMM,
+                            `MOV_IMM,
                             `CMP_IMM, 
                             `BRA, 
                             `BHI,
@@ -156,6 +157,12 @@ module jimmy(
                             {R[Rb],R[Ra]} <= (Ra == Rb) ? {mult[7:0],mult[7:0]} : (mult);
                             PC            <= PC + 8'd1;
                             state         <= `FETCH;
+                        end
+                        `CMP_REG: begin
+                            RESULT  <= R[Ra] - R[Rb];
+                            A7      <= R[Ra][7];
+                            B7      <= R[Rb][7];
+                            state   <= `WRITE_BACK;
                         end
                         `DIV_REG: begin
                             RESULT <= R[Ra] / R[Rb];
@@ -192,7 +199,7 @@ module jimmy(
                             state       <= `FETCH;
                         end
                         // OPCODE CATEGORY 10 =============================================================
-                        `LD_IMM: begin
+                        `MOV_IMM: begin
                             R[Ra]   <= argument;
                             Z       <= (argument == 8'd0) ? 1'b1 : 1'b0;
                             N       <= argument[7];
@@ -230,7 +237,7 @@ module jimmy(
                             state   <= `FETCH;
                         end                         
                         `BHI: begin          //   11111111 > 00000000
-                            if(C == 0 && Z ==0 ) 
+                            if(C == 0 && Z == 0) 
                                 PC <= argument;
                             else
                                 PC <= PC + 8'd1;
@@ -257,6 +264,15 @@ module jimmy(
                         `DIV_REG: begin
                             R[Ra] <= RESULT;
                             // TODO set flags later
+                        end
+                        `CMP_REG: begin
+                            V <= (A7 & ~B7 & ~R7) | (~A7 & B7 & R7);
+                            // N <= (R[Ra] < R[Rb])  ? 1'b1 : 1'b0;
+                            // Z <= (R[Ra] == R[Rb]) ? 1'b1 : 1'b0;
+                            // C <= (R[Ra] >= R[Rb]) ? 1'b1 : 1'b0;
+                            N <= R7;
+                            Z <= (RESULT == 8'd0) ? 1'b1 : 1'b0;
+                            C <= (~A7 & B7) | (B7 & R7) | (R7 & ~A7);
                         end
                         `CMP_IMM: begin
                             V <= (A7 & ~B7 & ~R7) | (~A7 & B7 & R7);

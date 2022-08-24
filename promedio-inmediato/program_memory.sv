@@ -6,7 +6,7 @@
 `define MOV      4'b0100
 `define DIV_REG  4'b1100
 
-`define LD_IMM   6'b100000
+`define MOV_IMM  6'b100000
 `define CMP_IMM  6'b100011
 `define INC      6'b100100
 `define DEC      6'b100101
@@ -40,8 +40,8 @@ module program_memory(
     
     always @(posedge(clk))
         if (reset == 0) begin
-            {rom[0], rom[1]}    <= {`LD_IMM, `R1, 8'd0};
-            {rom[2], rom[3]}    <= {`LD_IMM, `R2, 8'd0};
+            {rom[0], rom[1]}    <= {`MOV_IMM, `R1, 8'd0};
+            {rom[2], rom[3]}    <= {`MOV_IMM, `R2, 8'd0};
             rom[4]              <= {`INPUT,`R0}; // loop:
             rom[5]              <= {`ADD, `R1, `R0}; 
             rom[6]              <= {`INC, `R2};
