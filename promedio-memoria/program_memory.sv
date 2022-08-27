@@ -26,10 +26,10 @@
 `define R3  2'b11
 
 // labels
-`define feed    8'd04
-`define part2   8'd13
+`define input   8'd04
+`define ini_sum 8'd13
 `define do_sum  8'd15
-`define out     8'd24
+`define output  8'd24
 `define done    8'd26
 
 module program_memory(
@@ -46,23 +46,23 @@ module program_memory(
         if (reset == 0) begin
             {rom[0], rom[1]}    <= {`MOV_IMM, `R1, 8'd0};
             {rom[2], rom[3]}    <= {`MOV_IMM, `R2, 8'd0};
-            //feed:
+            //input:
             rom[4]              <= {`INPUT,`R0}; 
             rom[5]              <= {`STR_IND, `R0, `R1}; 
             rom[6]              <= {`INC, `R1};
             {rom[7], rom[8]}    <= {`CMP_IMM, `R1, 8'd10}; 
-            {rom[9], rom[10]}   <= {`BEQ, `part2};
-            {rom[11], rom[12]}  <= {`BRA, `feed};
-            // part2:
+            {rom[9], rom[10]}   <= {`BEQ, `ini_sum};
+            {rom[11], rom[12]}  <= {`BRA, `input};
+            // ini_sum:
             {rom[13], rom[14]}  <= {`MOV_IMM, `R1, 8'd0};
             // do_sum:
             rom[15]             <= {`LDR_IND, `R0, `R1};
             rom[16]             <= {`ADD, `R2, `R0}; 
             rom[17]             <= {`INC, `R1};
             {rom[18], rom[19]}  <= {`CMP_IMM, `R1, 8'd10}; 
-            {rom[20], rom[21]}  <= {`BEQ, `out};
+            {rom[20], rom[21]}  <= {`BEQ, `output};
             {rom[22], rom[23]}  <= {`BRA, `do_sum};
-            // out:
+            // output:
             rom[24]             <= {`DIV_REG, `R2, `R1}; 
             rom[25]             <= {`OUTPUT, `R2}; 
             // done:
@@ -71,29 +71,3 @@ module program_memory(
             rom[29]             <= `NOP;
         end
 endmodule
-
-/*
-    LD R1 #0 ; indice ram
-    LD R2 #0 ; suma
-feed:
-    INPUT R0
-    STR R0 [R1]
-    INC R1
-    CMP R1 #10
-    BEQ part2
-    BRA feed
-parte2:
-    LD R1 #0 ; indice ram
-do_sum:
-    LDR R0 [R1]
-    ADD R2 R0
-    INC R1
-    CMP R1 #10
-    BEQ out
-    BRA do_sum
-out:
-    DIV R2 R1
-    OUTPUT R2
-done:
-    BRA done
-*/

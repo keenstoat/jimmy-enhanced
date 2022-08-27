@@ -55,20 +55,3 @@ module program_memory(
             rom[18]             <= `NOP;
         end
 endmodule
-
-/*
-    LD R1 #0 ; sum
-    LD R2 #0 ; counter
-loop:
-    INPUT R0
-    ADD R1 R0
-    INC R2
-    CMP R2 #10
-    BEQ out
-    BRA loop
-out:
-    DIV R1 R2
-    OUTPUT R1
-done:
-    BRA done
-*/
