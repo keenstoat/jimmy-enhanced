@@ -26,6 +26,7 @@
 `define R3  2'b11
 
 // labels
+`define start   8'd00
 `define input   8'd04
 `define ini_sum 8'd13
 `define do_sum  8'd15
@@ -44,6 +45,7 @@ module program_memory(
     
     always @(posedge(clk))
         if (reset == 0) begin
+            //start:
             {rom[0], rom[1]}    <= {`MOV_IMM, `R1, 8'd0};
             {rom[2], rom[3]}    <= {`MOV_IMM, `R2, 8'd0};
             //input:

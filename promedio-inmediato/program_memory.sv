@@ -24,6 +24,7 @@
 `define R3  2'b11
 
 // labels
+`define start   8'd00
 `define loop    8'd04
 `define out     8'd13
 `define done    8'd15
@@ -40,17 +41,21 @@ module program_memory(
     
     always @(posedge(clk))
         if (reset == 0) begin
+            //start:
             {rom[0], rom[1]}    <= {`MOV_IMM, `R1, 8'd0};
             {rom[2], rom[3]}    <= {`MOV_IMM, `R2, 8'd0};
-            rom[4]              <= {`INPUT,`R0}; // loop:
+            // loop:
+            rom[4]              <= {`INPUT,`R0}; 
             rom[5]              <= {`ADD, `R1, `R0}; 
             rom[6]              <= {`INC, `R2};
             {rom[7], rom[8]}    <= {`CMP_IMM, `R2, 8'd10}; 
             {rom[9], rom[10]}   <= {`BEQ, `out};
             {rom[11], rom[12]}  <= {`BRA, `loop};
-            rom[13]             <= {`DIV_REG, `R1, `R2}; // out:
+            // out:
+            rom[13]             <= {`DIV_REG, `R1, `R2}; 
             rom[14]             <= {`OUTPUT, `R1}; 
-            {rom[15], rom[16]}  <= {`BRA, `done}; // done:
+            // done:
+            {rom[15], rom[16]}  <= {`BRA, `done}; 
             rom[17]             <= `NOP;
             rom[18]             <= `NOP;
         end
