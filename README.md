@@ -19,6 +19,9 @@ En las siguientes secciones se describe el set de instrucciones de Jimmy y se me
 
 A continuación se muestra tres programas implementados. Cada uno mas complejo que el anterior. Cada programa se muestra con su código en ensamblador genérico y su equivalente en instrucciones de Jimmy. Así también un análisis de la simulación mediante el gráfico de onda en EDAPlayground.
 
+La simulacion en EDA Playground se explica en un video de YouTube [HDL 2022 - Jimmy Enhanced
+](https://www.youtube.com/watch?v=kCSPlbDMz_w)
+
 ## Programa 1 - Calculo de promedio de valores inmediatos
 
 Para este programa se introduce a Jimmy las instrucciones `INC` y `DIV` con direccionamiento inmediato.
