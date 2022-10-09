@@ -1,18 +1,15 @@
 start:
-    MOV R2 #0   ; primos encontrados
-    MOV R0 #0   ; indice ram
+    MOV R2 #0   ; found prime numbers
+    INPUT R0    ; ram page address start
+    INPUT R3    ; ram page address stop (ram ends: 1μP=255, 2μP=127, 4μP=63, 8μP=31)
 primes:
-    CMP R0 #255 ; ram ends: 1μP=255, 2μP=127, 4μP=63, 8μP=31
-    BEQ output
     LDR R1 [R0]
-branching:
     CMP R1 #179
     BHI cuarto_4
     CMP R1 #103
     BHI cuarto_3
     CMP R1 #43
     BHI cuarto_2
-    
 cuarto_1:
     CMP R1 #2
     BEQ found
@@ -132,6 +129,8 @@ cuarto_4:
 found:
     ADD R2 #1
 next:
+    CMP R0 R3   ; last ram address is end of ram page
+    BEQ output
     ADD R0 #1
     BRA primes
 output:

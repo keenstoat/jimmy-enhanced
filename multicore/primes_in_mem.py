@@ -17,6 +17,10 @@ for prime in primes:
         i = randint(0, 255)
     l[i] = prime
 
-for i in range(0,256,4): 
-    s = f"{{mem[{i}], mem[{i+1}], mem[{i+2}], mem[{i+3}]}} <= {{8'd{l[i]}, 8'd{l[i+1]}, 8'd{l[i+2]}, 8'd{l[i+3]}}};"
-    print(s)
+# for i in range(0,256,4): 
+#     s = f"{{mem[{i}], mem[{i+1}], mem[{i+2}], mem[{i+3}]}} <= {{8'd{l[i]}, 8'd{l[i+1]}, 8'd{l[i+2]}, 8'd{l[i+3]}}};"
+#     print(s)
+
+for i, val in enumerate(l): 
+
+    print(f"mem[{i}] <= 8'd{val};", "\t// prime" if val in primes else "")

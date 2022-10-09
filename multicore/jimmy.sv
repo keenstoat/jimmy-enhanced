@@ -5,7 +5,7 @@
 `define ADD_REG  6'b000000
 `define MUL      6'b000010
 `define CMP_REG  6'b000011
-`define MOV      6'b000100
+`define MOV_REG  6'b000100
 `define NOP      6'b000111
 `define LDR_IND  6'b000101
 `define STR_IND  6'b000110
@@ -50,7 +50,7 @@ module jimmy(
     input  [7:0] code_data_bus,
     output [7:0] code_addr_bus,
 
-    inout  [7:0] mem_data_bus,
+    input  [7:0] mem_data_bus,
     output [7:0] mem_addr_bus
     );
     
@@ -72,7 +72,7 @@ module jimmy(
     wire R7 = RESULT[7];
 
     // Data Memory
-    mem_addr_bus = R[Rb];
+    assign mem_addr_bus = R[Rb];
 
     // State Machine
     reg [2:0] state;
@@ -161,7 +161,7 @@ module jimmy(
                             B7     <= R[Rb][7];
                             state  <= `WRITE_BACK;
                         end
-                        `MOV: begin
+                        `MOV_REG: begin
                             R[Ra]   <= R[Rb];
                             Z       <= (R[Rb] == 8'd0) ? 1'b1 : 1'b0;
                             N       <= R[Rb][7];
@@ -182,7 +182,7 @@ module jimmy(
                             state   <= `FETCH;
                         end
                         `STR_IND: begin
-                            mem_data_bus    <= R[Ra];
+                            // mem_data_bus    <= R[Ra];
                             Z               <= (R[Ra] == 8'd0) ? 1'b1 : 1'b0;
                             N               <= R[Ra][7];
                             V               <= 0;
