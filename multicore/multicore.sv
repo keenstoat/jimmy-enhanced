@@ -1,13 +1,12 @@
 
 `define CORES 4
 `define MEM_PAGE_SIZE 256/`CORES
-`define CORES_IMPLEMENTED 8'b00001111
+`define CORE_FINISH_MASK 8'b00001111
 
 module multicore(
     input CLOCK_50,
     input [17:17] SW,
     output reg [17:10] LEDR,
-    output reg [6:0] HEX6, 
     output reg [6:0] HEX5, 
     output reg [6:0] HEX4, 
     output reg [6:0] HEX3, 
@@ -15,7 +14,7 @@ module multicore(
     output reg [6:0] HEX1, 
     output reg [6:0] HEX0 
 );
-    wire clk = CLOCK_50;
+    wire clk;
     reg  reset;
     
     wire [7:0] code_data_bus [7:0];
@@ -28,8 +27,10 @@ module multicore(
     wire [7:0] result [7:0];
     
     reg [15:0] clk_cycles = 16'h0;
-    reg [7:0]  total_primes_found = 8'd0; // expected val = 54
+    reg [7:0]  total_primes_found = 8'd0; // expected val = 54 = 0x36
     reg [7:0]  output_ready = 8'h00;
+
+    clk_divide clk_divide(.reset(reset), .clk_in(CLOCK_50), .divisor(32'd400_000), .clk_out(clk));
 
     program_memory rom(
         .clk(clk),
@@ -100,22 +101,22 @@ module multicore(
     bin_to_7_segment hex2(.nibble(clk_cycles[11:8]), .segment(HEX2));
     bin_to_7_segment hex3(.nibble(clk_cycles[15:12]), .segment(HEX3));
 
-    bin_to_7_segment hex5(.nibble(total_primes_found[3:0]), .segment(HEX5));
-    bin_to_7_segment hex6(.nibble(total_primes_found[7:4]), .segment(HEX6));
+    bin_to_7_segment hex4(.nibble(total_primes_found[3:0]), .segment(HEX4));
+    bin_to_7_segment hex5(.nibble(total_primes_found[7:4]), .segment(HEX5));
 
     integer core_num;
     always @(*) begin
         reset <= SW;
         LEDR <= output_ready;
-
-        for(core_num=0; core_num < `CORES; core_num++) begin
-                total_primes_found += result[core_num];
-        end
     end
 
     always @ (posedge clk) begin
-        if(output_ready != `CORES_IMPLEMENTED) begin
+        if(output_ready != `CORE_FINISH_MASK) begin
             clk_cycles += 1'b1;
+        end
+        else begin
+            total_primes_found = result[0] + result[1] + result[2] + result[3] 
+                + result[4] + result[5] + result[6] + result[7];
         end
     end
     
