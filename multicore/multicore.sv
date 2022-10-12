@@ -1,12 +1,23 @@
-`timescale 1ns / 1ps
+
 `define CORES 4
 `define MEM_PAGE_SIZE 256/`CORES
-`define CORES_DONE_MATCH 8'b00001111
+`define CORES_IMPLEMENTED 8'b00001111
 
-module multicore_jimmy_tb();
-    reg  clk;
+module multicore(
+    input CLOCK_50,
+    input [17:17] SW,
+    output reg [17:10] LEDR,
+    output reg [6:0] HEX6, 
+    output reg [6:0] HEX5, 
+    output reg [6:0] HEX4, 
+    output reg [6:0] HEX3, 
+    output reg [6:0] HEX2, 
+    output reg [6:0] HEX1, 
+    output reg [6:0] HEX0 
+);
+    wire clk = CLOCK_50;
     reg  reset;
-
+    
     wire [7:0] code_data_bus [7:0];
     wire [7:0] code_addr_bus [7:0];
 
@@ -16,7 +27,9 @@ module multicore_jimmy_tb();
     wire [3:0] out_strobe [7:0];
     wire [7:0] result [7:0];
     
-    wire [7:0] output_ready;
+    reg [15:0] clk_cycles = 16'h0;
+    reg [7:0]  total_primes_found = 8'd0; // expected val = 54
+    reg [7:0]  output_ready = 8'h00;
 
     program_memory rom(
         .clk(clk),
@@ -59,16 +72,10 @@ module multicore_jimmy_tb();
         .addr_bus_7(mem_addr_bus[7])
     );
 
-    always #1 clk = !clk;
-    reg [15:0] clk_cycles = 16'h0;
-    reg [7:0] core_done_flag = 8'h00;
-    reg [7:0] total_primes_found = 8'd0;
-
     genvar core_id;
     generate
-        for(core_id=8'd0; core_id < `CORES; core_id=core_id+8'd1) begin : create_cores
-
-            assign output_ready[core_id] = out_strobe[core_id][2];
+        for(core_id=8'd0; core_id < `CORES; core_id++) begin : create_cores
+            
             jimmy core(
                 .clk(clk),
                 .reset(reset),
@@ -81,37 +88,35 @@ module multicore_jimmy_tb();
                 .out_port_2(result[core_id]),
                 .out_strobe(out_strobe[core_id])
             );
-            always @ (negedge output_ready[core_id]) begin
-                core_done_flag[core_id] = 1'b1;
+            always @ (negedge out_strobe[core_id][2]) begin
+                output_ready[core_id] <= 1'b1;
                 $display("Core %d: %d", core_id, result[core_id]);
             end
         end
     endgenerate
-    
+
+    bin_to_7_segment hex0(.nibble(clk_cycles[3:0]), .segment(HEX0));
+    bin_to_7_segment hex1(.nibble(clk_cycles[7:4]), .segment(HEX1));
+    bin_to_7_segment hex2(.nibble(clk_cycles[11:8]), .segment(HEX2));
+    bin_to_7_segment hex3(.nibble(clk_cycles[15:12]), .segment(HEX3));
+
+    bin_to_7_segment hex5(.nibble(total_primes_found[3:0]), .segment(HEX5));
+    bin_to_7_segment hex6(.nibble(total_primes_found[7:4]), .segment(HEX6));
+
+    integer core_num;
+    always @(*) begin
+        reset <= SW;
+        LEDR <= output_ready;
+
+        for(core_num=0; core_num < `CORES; core_num++) begin
+                total_primes_found += result[core_num];
+        end
+    end
+
     always @ (posedge clk) begin
-        if(core_done_flag != `CORES_DONE_MATCH) begin
-            clk_cycles = clk_cycles + 1'b1;
-        end
-        else begin
-            integer core_id;
-            for(core_id=0; core_id < `CORES; core_id=core_id+1) begin
-                total_primes_found = total_primes_found + result[core_id];
-            end
-            $display("Total Cycles: %d", clk_cycles);
-            $display("Total Primes: %d", total_primes_found);
-            $finish; // finish when program is done on all cores
+        if(output_ready != `CORES_IMPLEMENTED) begin
+            clk_cycles += 1'b1;
         end
     end
     
-    initial begin
-        $dumpfile("test.vcd"); 
-        $dumpvars(0, multicore_jimmy_tb); 
-        // init signals
-        clk <= 0;
-        reset <= 0;
-        #50;
-        reset <= 1;
-        #50000
-        $finish; // finish after 50000 delay units
-    end
 endmodule
