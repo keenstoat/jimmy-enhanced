@@ -6,16 +6,16 @@
 module multicore(
     input CLOCK_50,
     input [17:17] SW,
-    output reg [17:10] LEDR,
-    output reg [6:0] HEX5, 
-    output reg [6:0] HEX4, 
-    output reg [6:0] HEX3, 
-    output reg [6:0] HEX2, 
-    output reg [6:0] HEX1, 
-    output reg [6:0] HEX0 
+    output [17:10] LEDR,
+    output [6:0] HEX5, 
+    output [6:0] HEX4, 
+    output [6:0] HEX3, 
+    output [6:0] HEX2, 
+    output [6:0] HEX1, 
+    output [6:0] HEX0 
 );
     wire clk;
-    reg  reset;
+    wire reset = SW;
     
     wire [7:0] code_data_bus [7:0];
     wire [7:0] code_addr_bus [7:0];
@@ -26,11 +26,13 @@ module multicore(
     wire [3:0] out_strobe [7:0];
     wire [7:0] result [7:0];
     
-    reg [15:0] clk_cycles = 16'h0;
+    reg [15:0] clk_cycles = 16'h0; // 4cores = 0x15F0
     reg [7:0]  total_primes_found = 8'd0; // expected val = 54 = 0x36
     reg [7:0]  output_ready = 8'h00;
+    reg [7:0]  output_ready_reset = 8'h00;
+    assign LEDR = output_ready;
 
-    clk_divide clk_divide(.reset(reset), .clk_in(CLOCK_50), .divisor(32'd400_000), .clk_out(clk));
+    clk_divide clk_divide(.reset(reset), .clk_in(CLOCK_50), .divisor(32'd100_000), .clk_out(clk));
 
     program_memory rom(
         .clk(clk),
@@ -89,9 +91,15 @@ module multicore(
                 .out_port_2(result[core_id]),
                 .out_strobe(out_strobe[core_id])
             );
-            always @ (negedge out_strobe[core_id][2]) begin
-                output_ready[core_id] <= 1'b1;
-                $display("Core %d: %d", core_id, result[core_id]);
+            // always @ (negedge out_strobe[core_id][2]) begin
+            //     output_ready[core_id] <= 1'b1;
+            // end
+            always @ (negedge out_strobe[core_id][2] or negedge reset) begin
+                if(reset == 0) begin
+                    output_ready[core_id] <= 1'b0;
+                end
+                else 
+                    output_ready[core_id] <= 1'b1;
             end
         end
     endgenerate
@@ -104,14 +112,12 @@ module multicore(
     bin_to_7_segment hex4(.nibble(total_primes_found[3:0]), .segment(HEX4));
     bin_to_7_segment hex5(.nibble(total_primes_found[7:4]), .segment(HEX5));
 
-    integer core_num;
-    always @(*) begin
-        reset <= SW;
-        LEDR <= output_ready;
-    end
-
-    always @ (posedge clk) begin
-        if(output_ready != `CORE_FINISH_MASK) begin
+    always @ (posedge clk or negedge reset) begin
+        if(reset == 0) begin
+            clk_cycles = 16'h0;
+            total_primes_found = 8'd0;
+        end
+        else if(output_ready != `CORE_FINISH_MASK) begin
             clk_cycles += 1'b1;
         end
         else begin
