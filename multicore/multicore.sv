@@ -115,15 +115,15 @@ module multicore(
     always @ (posedge clk or negedge reset) begin
         if(reset == 0) begin
             clk_cycles = 16'h0;
-            total_primes_found = 8'd0;
         end
         else if(output_ready != `CORE_FINISH_MASK) begin
             clk_cycles += 1'b1;
         end
-        else begin
-            total_primes_found = result[0] + result[1] + result[2] + result[3] 
-                + result[4] + result[5] + result[6] + result[7];
-        end
+    end
+
+    always @ (result) begin
+        total_primes_found = result[0] + result[1] + result[2] + result[3] 
+            + result[4] + result[5] + result[6] + result[7];
     end
     
 endmodule
