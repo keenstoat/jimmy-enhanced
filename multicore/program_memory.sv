@@ -64,7 +64,31 @@ module program_memory(
     output [7:0] data_bus_6,
 
     input  [7:0] addr_bus_7,
-    output [7:0] data_bus_7
+    output [7:0] data_bus_7,
+
+    input  [7:0] addr_bus_8,
+    output [7:0] data_bus_8,
+
+    input  [7:0] addr_bus_9,
+    output [7:0] data_bus_9,
+
+    input  [7:0] addr_bus_10,
+    output [7:0] data_bus_10,
+
+    input  [7:0] addr_bus_11,
+    output [7:0] data_bus_11,
+
+    input  [7:0] addr_bus_12,
+    output [7:0] data_bus_12,
+
+    input  [7:0] addr_bus_13,
+    output [7:0] data_bus_13,
+
+    input  [7:0] addr_bus_14,
+    output [7:0] data_bus_14,
+
+    input  [7:0] addr_bus_15,
+    output [7:0] data_bus_15
     );
     
     reg [7:0] rom[255:0];
@@ -76,6 +100,15 @@ module program_memory(
     assign data_bus_5 = rom[addr_bus_5];
     assign data_bus_6 = rom[addr_bus_6];
     assign data_bus_7 = rom[addr_bus_7];
+
+    assign data_bus_8 = rom[addr_bus_8];
+    assign data_bus_9 = rom[addr_bus_9];
+    assign data_bus_10 = rom[addr_bus_10];
+    assign data_bus_11 = rom[addr_bus_11];
+    assign data_bus_12 = rom[addr_bus_12];
+    assign data_bus_13 = rom[addr_bus_13];
+    assign data_bus_14 = rom[addr_bus_14];
+    assign data_bus_15 = rom[addr_bus_15];
     
     always @(posedge(clk))
         if (reset == 0) begin

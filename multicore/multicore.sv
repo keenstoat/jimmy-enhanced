@@ -1,12 +1,12 @@
 
-`define CORES 4
+`define CORES 16
 `define MEM_PAGE_SIZE 256/`CORES
-`define CORE_FINISH_MASK 8'b00001111
+`define CORE_FINISH_MASK 16'b1111_1111_1111_1111
 
 module multicore(
     input CLOCK_50,
     input [17:17] SW,
-    output [17:10] LEDR,
+    output [17:2] LEDR,
     output [6:0] HEX5, 
     output [6:0] HEX4, 
     output [6:0] HEX3, 
@@ -17,19 +17,18 @@ module multicore(
     wire clk;
     wire reset = SW;
     
-    wire [7:0] code_data_bus [7:0];
-    wire [7:0] code_addr_bus [7:0];
+    wire [7:0] code_data_bus [15:0];
+    wire [7:0] code_addr_bus [15:0];
 
-    wire [7:0] mem_data_bus [7:0];
-    wire [7:0] mem_addr_bus [7:0];
+    wire [7:0] mem_data_bus [15:0];
+    wire [7:0] mem_addr_bus [15:0];
 
-    wire [3:0] out_strobe [7:0];
-    wire [7:0] result [7:0];
+    wire [3:0] out_strobe [15:0];
+    wire [7:0] result [15:0];
     
     reg [15:0] clk_cycles = 16'h0; // 4cores = 0x15F0
     reg [7:0]  total_primes_found = 8'd0; // expected val = 54 = 0x36
-    reg [7:0]  output_ready = 8'h00;
-    reg [7:0]  output_ready_reset = 8'h00;
+    reg [15:0]  output_ready = 8'h00;
     assign LEDR = output_ready;
 
     clk_divide clk_divide(.reset(reset), .clk_in(CLOCK_50), .divisor(32'd100_000), .clk_out(clk));
@@ -52,7 +51,24 @@ module multicore(
         .data_bus_6(code_data_bus[6]),
         .addr_bus_6(code_addr_bus[6]),
         .data_bus_7(code_data_bus[7]),
-        .addr_bus_7(code_addr_bus[7])
+        .addr_bus_7(code_addr_bus[7]),
+
+        .data_bus_8(code_data_bus[8]),
+        .addr_bus_8(code_addr_bus[8]),
+        .data_bus_9(code_data_bus[9]),
+        .addr_bus_9(code_addr_bus[9]),
+        .data_bus_10(code_data_bus[10]),
+        .addr_bus_10(code_addr_bus[10]),
+        .data_bus_11(code_data_bus[11]),
+        .addr_bus_11(code_addr_bus[11]),
+        .data_bus_12(code_data_bus[12]),
+        .addr_bus_12(code_addr_bus[12]),
+        .data_bus_13(code_data_bus[13]),
+        .addr_bus_13(code_addr_bus[13]),
+        .data_bus_14(code_data_bus[14]),
+        .addr_bus_14(code_addr_bus[14]),
+        .data_bus_15(code_data_bus[15]),
+        .addr_bus_15(code_addr_bus[15])
     );
     data_memory mem(
         .clk(clk),
@@ -72,7 +88,24 @@ module multicore(
         .data_bus_6(mem_data_bus[6]),
         .addr_bus_6(mem_addr_bus[6]),
         .data_bus_7(mem_data_bus[7]),
-        .addr_bus_7(mem_addr_bus[7])
+        .addr_bus_7(mem_addr_bus[7]),
+
+        .data_bus_8(mem_data_bus[8]),
+        .addr_bus_8(mem_addr_bus[8]),
+        .data_bus_9(mem_data_bus[9]),
+        .addr_bus_9(mem_addr_bus[9]),
+        .data_bus_10(mem_data_bus[10]),
+        .addr_bus_10(mem_addr_bus[10]),
+        .data_bus_11(mem_data_bus[11]),
+        .addr_bus_11(mem_addr_bus[11]),
+        .data_bus_12(mem_data_bus[12]),
+        .addr_bus_12(mem_addr_bus[12]),
+        .data_bus_13(mem_data_bus[13]),
+        .addr_bus_13(mem_addr_bus[13]),
+        .data_bus_14(mem_data_bus[14]),
+        .addr_bus_14(mem_addr_bus[14]),
+        .data_bus_15(mem_data_bus[15]),
+        .addr_bus_15(mem_addr_bus[15])
     );
 
     genvar core_id;
@@ -122,8 +155,9 @@ module multicore(
     end
 
     always @ (result) begin
-        total_primes_found = result[0] + result[1] + result[2] + result[3] 
-            + result[4] + result[5] + result[6] + result[7];
+        total_primes_found = result[0]  + result[1]  + result[2]  + result[3] 
+                           + result[4]  + result[5]  + result[6]  + result[7]
+                           + result[8]  + result[9]  + result[10] + result[11]
+                           + result[12] + result[13] + result[14] + result[15];
     end
-    
 endmodule
