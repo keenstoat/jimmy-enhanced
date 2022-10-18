@@ -21,4 +21,4 @@ module multicore(
 
 ## Video explicativo
 
-Un video explicativo del sistema se encuentra en el siguiente enlace: (Sistema multi-procesador en Verilog)[https://www.youtube.com/watch?v=Tjz8oyrRNAQ]
+Un video explicativo del sistema se encuentra en el siguiente enlace: [Sistema multi-procesador en Verilog](https://www.youtube.com/watch?v=Tjz8oyrRNAQ)
