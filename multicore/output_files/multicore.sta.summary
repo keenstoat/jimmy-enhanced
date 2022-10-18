@@ -1,0 +1,269 @@
+------------------------------------------------------------
+Timing Analyzer Summary
+------------------------------------------------------------
+
+Type  : Slow 1200mV 85C Model Setup 'clk_divide:clk_divide|clk_out'
+Slack : -19.115
+TNS   : -10748.493
+
+Type  : Slow 1200mV 85C Model Setup 'CLOCK_50'
+Slack : -5.580
+TNS   : -139.266
+
+Type  : Slow 1200mV 85C Model Hold 'clk_divide:clk_divide|clk_out'
+Slack : 0.442
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Hold 'CLOCK_50'
+Slack : 0.652
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'CLOCK_50'
+Slack : -3.000
+TNS   : -52.071
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'clk_divide:clk_divide|clk_out'
+Slack : -1.487
+TNS   : -1760.608
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'jimmy:create_cores[0].core|out_strobe[2]'
+Slack : -1.487
+TNS   : -1.487
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'jimmy:create_cores[10].core|out_strobe[2]'
+Slack : -1.487
+TNS   : -1.487
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'jimmy:create_cores[11].core|out_strobe[2]'
+Slack : -1.487
+TNS   : -1.487
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'jimmy:create_cores[12].core|out_strobe[2]'
+Slack : -1.487
+TNS   : -1.487
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'jimmy:create_cores[13].core|out_strobe[2]'
+Slack : -1.487
+TNS   : -1.487
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'jimmy:create_cores[14].core|out_strobe[2]'
+Slack : -1.487
+TNS   : -1.487
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'jimmy:create_cores[15].core|out_strobe[2]'
+Slack : -1.487
+TNS   : -1.487
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'jimmy:create_cores[1].core|out_strobe[2]'
+Slack : -1.487
+TNS   : -1.487
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'jimmy:create_cores[2].core|out_strobe[2]'
+Slack : -1.487
+TNS   : -1.487
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'jimmy:create_cores[3].core|out_strobe[2]'
+Slack : -1.487
+TNS   : -1.487
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'jimmy:create_cores[4].core|out_strobe[2]'
+Slack : -1.487
+TNS   : -1.487
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'jimmy:create_cores[5].core|out_strobe[2]'
+Slack : -1.487
+TNS   : -1.487
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'jimmy:create_cores[6].core|out_strobe[2]'
+Slack : -1.487
+TNS   : -1.487
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'jimmy:create_cores[7].core|out_strobe[2]'
+Slack : -1.487
+TNS   : -1.487
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'jimmy:create_cores[8].core|out_strobe[2]'
+Slack : -1.487
+TNS   : -1.487
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'jimmy:create_cores[9].core|out_strobe[2]'
+Slack : -1.487
+TNS   : -1.487
+
+Type  : Slow 1200mV 0C Model Setup 'clk_divide:clk_divide|clk_out'
+Slack : -17.426
+TNS   : -10064.426
+
+Type  : Slow 1200mV 0C Model Setup 'CLOCK_50'
+Slack : -4.939
+TNS   : -123.763
+
+Type  : Slow 1200mV 0C Model Hold 'clk_divide:clk_divide|clk_out'
+Slack : 0.391
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Hold 'CLOCK_50'
+Slack : 0.588
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'CLOCK_50'
+Slack : -3.000
+TNS   : -52.071
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'clk_divide:clk_divide|clk_out'
+Slack : -1.487
+TNS   : -1760.608
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'jimmy:create_cores[0].core|out_strobe[2]'
+Slack : -1.487
+TNS   : -1.487
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'jimmy:create_cores[10].core|out_strobe[2]'
+Slack : -1.487
+TNS   : -1.487
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'jimmy:create_cores[11].core|out_strobe[2]'
+Slack : -1.487
+TNS   : -1.487
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'jimmy:create_cores[12].core|out_strobe[2]'
+Slack : -1.487
+TNS   : -1.487
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'jimmy:create_cores[13].core|out_strobe[2]'
+Slack : -1.487
+TNS   : -1.487
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'jimmy:create_cores[14].core|out_strobe[2]'
+Slack : -1.487
+TNS   : -1.487
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'jimmy:create_cores[15].core|out_strobe[2]'
+Slack : -1.487
+TNS   : -1.487
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'jimmy:create_cores[1].core|out_strobe[2]'
+Slack : -1.487
+TNS   : -1.487
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'jimmy:create_cores[2].core|out_strobe[2]'
+Slack : -1.487
+TNS   : -1.487
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'jimmy:create_cores[3].core|out_strobe[2]'
+Slack : -1.487
+TNS   : -1.487
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'jimmy:create_cores[4].core|out_strobe[2]'
+Slack : -1.487
+TNS   : -1.487
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'jimmy:create_cores[5].core|out_strobe[2]'
+Slack : -1.487
+TNS   : -1.487
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'jimmy:create_cores[6].core|out_strobe[2]'
+Slack : -1.487
+TNS   : -1.487
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'jimmy:create_cores[7].core|out_strobe[2]'
+Slack : -1.487
+TNS   : -1.487
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'jimmy:create_cores[8].core|out_strobe[2]'
+Slack : -1.487
+TNS   : -1.487
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'jimmy:create_cores[9].core|out_strobe[2]'
+Slack : -1.487
+TNS   : -1.487
+
+Type  : Fast 1200mV 0C Model Setup 'clk_divide:clk_divide|clk_out'
+Slack : -7.567
+TNS   : -4051.349
+
+Type  : Fast 1200mV 0C Model Setup 'CLOCK_50'
+Slack : -1.860
+TNS   : -42.002
+
+Type  : Fast 1200mV 0C Model Hold 'clk_divide:clk_divide|clk_out'
+Slack : 0.181
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Hold 'CLOCK_50'
+Slack : 0.270
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'CLOCK_50'
+Slack : -3.000
+TNS   : -38.046
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'clk_divide:clk_divide|clk_out'
+Slack : -1.000
+TNS   : -1184.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'jimmy:create_cores[0].core|out_strobe[2]'
+Slack : -1.000
+TNS   : -1.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'jimmy:create_cores[10].core|out_strobe[2]'
+Slack : -1.000
+TNS   : -1.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'jimmy:create_cores[11].core|out_strobe[2]'
+Slack : -1.000
+TNS   : -1.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'jimmy:create_cores[12].core|out_strobe[2]'
+Slack : -1.000
+TNS   : -1.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'jimmy:create_cores[13].core|out_strobe[2]'
+Slack : -1.000
+TNS   : -1.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'jimmy:create_cores[14].core|out_strobe[2]'
+Slack : -1.000
+TNS   : -1.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'jimmy:create_cores[15].core|out_strobe[2]'
+Slack : -1.000
+TNS   : -1.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'jimmy:create_cores[1].core|out_strobe[2]'
+Slack : -1.000
+TNS   : -1.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'jimmy:create_cores[2].core|out_strobe[2]'
+Slack : -1.000
+TNS   : -1.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'jimmy:create_cores[3].core|out_strobe[2]'
+Slack : -1.000
+TNS   : -1.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'jimmy:create_cores[4].core|out_strobe[2]'
+Slack : -1.000
+TNS   : -1.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'jimmy:create_cores[5].core|out_strobe[2]'
+Slack : -1.000
+TNS   : -1.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'jimmy:create_cores[6].core|out_strobe[2]'
+Slack : -1.000
+TNS   : -1.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'jimmy:create_cores[7].core|out_strobe[2]'
+Slack : -1.000
+TNS   : -1.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'jimmy:create_cores[8].core|out_strobe[2]'
+Slack : -1.000
+TNS   : -1.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'jimmy:create_cores[9].core|out_strobe[2]'
+Slack : -1.000
+TNS   : -1.000
+
+------------------------------------------------------------

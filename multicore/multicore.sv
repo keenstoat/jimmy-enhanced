@@ -1,7 +1,8 @@
 
-`define CORES 16
+`define CORES 16 // change this to a power of 2: 1,2,4,8,16
 `define MEM_PAGE_SIZE 256/`CORES
-`define CORE_FINISH_MASK 16'b1111_1111_1111_1111
+`define CORE_FINISH_MASK 16'b1111_1111_1111_1111 // change this to reflect a bit per number of cores
+                                                 // E.g: 16'b0000_0000_1111_1111 is for 8 cores
 
 module multicore(
     input CLOCK_50,
